@@ -17,3 +17,7 @@ Input: weight = [900,950,800,1000,700,800]
 Output: 5
 Explanation: The sum of weights of the 6 apples exceeds 5000 so we choose any 5 of them.
  
+Constraints:
+
+1 <= weight.length <= 103
+1 <= weight[i] <= 103
