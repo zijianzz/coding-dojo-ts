@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // 2021-03-30: Temporary workaround while tsconfig-paths and eslint-import-resolver-typescript get updated to support tsconfig "paths" without a "baseUrl"
+    "baseUrl": ".",
+  }
+}
