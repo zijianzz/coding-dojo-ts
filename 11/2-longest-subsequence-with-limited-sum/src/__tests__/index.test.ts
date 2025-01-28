@@ -29,7 +29,7 @@ describe('answerQueries', () => {
     },
   ])('should return an array', ({ nums, queries, result: expectedResult }) => {
     const result = answerQueries(nums, queries);
-
+    console.log(result)
     expect(arraysEqual(result, expectedResult)).toBe(true);
   });
 });
