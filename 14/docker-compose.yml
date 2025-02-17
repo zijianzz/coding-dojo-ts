@@ -1,0 +1,29 @@
+version: "3.5"
+
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: lafourchette
+      POSTGRES_PASSWORD: lafourchette
+      POSTGRES_DB: coding-dojo
+    ports:
+      - '5432:5432'
+    volumes:
+      - dev-postgres-latest-data:/var/lib/postgresql/data
+    networks:
+      - dev
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U lafourchette']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+networks:
+  dev:
+    external: true
+
+volumes:
+  dev-postgres-latest-data:
+    external: true
