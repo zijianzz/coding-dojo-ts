@@ -7,10 +7,12 @@ export async function customerNeverOrder(): Promise<{ customers: string }[] | un
   }>(
     CompiledQuery.raw(
       // Complete the query to find result
+      // SELECT name as customers FROM customers c LEFT JOIN orders o ON c.id = o.customer_id WHERE customer_id IS NULL;
       `
-SELECT 1
+    SELECT name as customers FROM customers where id NOT IN (SELECT customer_id FROM orders);
 `,
     ),
   );
   return rows;
 }
+
