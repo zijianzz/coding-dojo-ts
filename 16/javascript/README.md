@@ -1,0 +1,3 @@
+# What is the task?
+
+Trivia from the legacy code retreat is a good codebase to start this with. There are a few bugs in the code and a few weaknesses in the design to fix. By a weakness we mean that it’d be easy for a developer to introduce a certain type of bug while working with the code. Your job is to change the design so that it is either impossible or at least much less likely that that kind of bug would be introduced.
