@@ -1,42 +1,43 @@
+const MAX_PLAYERS = 6;
+const MAGIC_6 = 6;
+const CATEGORIES = {
+  POP: 'Pop',
+  SCIENCE: 'Science',
+  SPORT: 'Sports',
+  ROCK: 'Rock',
+};
+
 export class Game {
-  rockQuestions: any[];
-  isGettingOutOfPenaltyBox: boolean;
-  currentPlayer: number;
-  sportsQuestions: any[];
-  scienceQuestions: any[];
-  inPenaltyBox: any[];
-  popQuestions: any[];
-  purses: any[];
-  places: any[];
-  players: any[];
+  isGettingOutOfPenaltyBox: boolean = false;
+  currentPlayer: number = 0;
+  rockQuestions: string[] = [];
+  sportsQuestions: string[] = [];
+  scienceQuestions: string[] = [];
+  popQuestions: string[] = [];
+  inPenaltyBox: boolean[] = new Array(MAX_PLAYERS);
+  purses: number[] = new Array(MAX_PLAYERS);
+  places: number[] = new Array(MAX_PLAYERS);
+  players: string[] = [];
 
   constructor() {
-    this.players = [];
-    this.places = new Array(6);
-    this.purses = new Array(6);
-    this.inPenaltyBox = new Array(6);
-
-    this.popQuestions = [];
-    this.scienceQuestions = [];
-    this.sportsQuestions = [];
-    this.rockQuestions = [];
-
-    this.currentPlayer = 0;
-    this.isGettingOutOfPenaltyBox = false;
-
     for (let i = 0; i < 50; i++) {
       this.popQuestions.push('Pop Question ' + i);
       this.scienceQuestions.push('Science Question ' + i);
       this.sportsQuestions.push('Sports Question ' + i);
-      this.rockQuestions.push(this.createRockQuestion(i));
+      this.rockQuestions.push('Rock Question ' + i);
     }
   }
 
-  add(playerName) {
+  add(playerName: string): boolean {
+    if (this.players.length >= MAX_PLAYERS) {
+      console.log('The game is full');
+      return false;
+    }
     this.players.push(playerName);
-    this.places[this.howManyPlayers() - 1] = 0;
-    this.purses[this.howManyPlayers() - 1] = 0;
-    this.inPenaltyBox[this.howManyPlayers() - 1] = false;
+    const playerIndex = this.players.length - 1;
+    this.places[playerIndex] = 0;
+    this.purses[playerIndex] = 0;
+    this.inPenaltyBox[playerIndex] = false;
 
     console.log(playerName + ' was added');
     console.log('They are player number ' + this.players.length);
@@ -44,15 +45,14 @@ export class Game {
     return true;
   }
 
-  howManyPlayers() {
-    return this.players.length;
-  }
-
   didPlayerWin() {
-    return !(this.purses[this.currentPlayer] == 6);
+    return this.purses[this.currentPlayer] !== MAGIC_6;
   }
 
   currentCategory() {
+    const modular = this.places[this.currentPlayer] % 4;
+    const categories = [CATEGORIES.POP, CATEGORIES.SCIENCE, CATEGORIES.SPORT, CATEGORIES.ROCK];
+    return categories[modular];
     if (this.places[this.currentPlayer] == 0) return 'Pop';
     if (this.places[this.currentPlayer] == 4) return 'Pop';
     if (this.places[this.currentPlayer] == 8) return 'Pop';
@@ -80,35 +80,31 @@ export class Game {
     }
   }
 
-  createRockQuestion(index) {
-    return 'Rock Question ' + index;
+  isPlayable(playerCount: number) {
+    return playerCount >= 2;
   }
 
-  isPlayable(howManyPlayers) {
-    return howManyPlayers >= 2;
-  }
-
-  roll(roll) {
+  roll(diceRoll: number) {
     console.log(this.players[this.currentPlayer] + ' is the current player');
-    console.log('They have rolled a ' + roll);
+    console.log('They have rolled a ' + diceRoll);
 
     if (this.inPenaltyBox[this.currentPlayer]) {
-      if (roll % 2 != 0) {
+      if (diceRoll % 2 != 0) {
         this.isGettingOutOfPenaltyBox = true;
 
         console.log(this.players[this.currentPlayer] + ' is getting out of the penalty box');
-        this._movePlayerAndAskQuestion(roll);
+        this._movePlayerAndAskQuestion(diceRoll);
       } else {
         console.log(this.players[this.currentPlayer] + ' is not getting out of the penalty box');
         this.isGettingOutOfPenaltyBox = false;
       }
     } else {
-      this._movePlayerAndAskQuestion(roll);
+      this._movePlayerAndAskQuestion(diceRoll);
     }
   }
 
-  _movePlayerAndAskQuestion(roll) {
-    this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
+  _movePlayerAndAskQuestion(diceRoll: number) {
+    this.places[this.currentPlayer] = this.places[this.currentPlayer] + diceRoll;
     if (this.places[this.currentPlayer] > 11) {
       this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
     }
