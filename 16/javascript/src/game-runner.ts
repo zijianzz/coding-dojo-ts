@@ -22,4 +22,3 @@ export class GameRunner {
   }
 }
 GameRunner.main(1);
-GameRunner.main(2);

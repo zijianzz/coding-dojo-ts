@@ -5,25 +5,30 @@
   "main": "src/game-runner.ts",
   "scripts": {
     "start": "ts-node src/game-runner.ts",
-    "test": "vitest",
+    "test": "jest --forceExit --detectOpenHandles --passWithNoTests",
     "lint": "eslint --ext .js,.ts,.tsx .",
     "lint:fix": "npm run lint -- --fix"
   },
   "author": "Felix Blechschmitt",
   "license": "GPL-3.0",
   "dependencies": {
-    "seedrandom": "^3.0.5",
-    "typescript": "5.5.4"
+    "seedrandom": "^3.0.5"
   },
   "devDependencies": {
     "ts-node": "^10.9.2",
-    "vitest": "^2.0.5",
+    "eslint-plugin-jest": "^28.8.3",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
     "eslint": "^8.57.1",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-config-prettier": "^9.1.0",
-    "prettier": "^2.8.8"
-
+    "prettier": "^2.8.8",
+    "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.14",
+    "@types/node": "20.15.0",
+    "eslint-plugin-import": "^2.31.0",
+    "typescript": "~5.5.4"
   }
 }
