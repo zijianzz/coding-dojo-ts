@@ -21,4 +21,3 @@ export class GameRunner {
     } while (notAWinner);
   }
 }
-GameRunner.main(1);

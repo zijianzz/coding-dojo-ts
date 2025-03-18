@@ -1,11 +1,11 @@
 import { GameRunner } from '../game-runner';
 
 describe('The test environment', () => {
-  it('should pass', () => {
-    expect(true).toBe(true);
-  });
+  const consoleSpy = jest.spyOn(console, 'log');
 
-  it('should access game', function () {
+  it.each([[1], [42], [6453]])('should access game with seed ', function (seed: number) {
     expect(GameRunner).not.toBe(undefined);
+    GameRunner.main(seed);
+    expect(consoleSpy.mock.calls).toMatchSnapshot();
   });
 });
