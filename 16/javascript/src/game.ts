@@ -1,5 +1,7 @@
 const MAX_PLAYERS = 6;
+const MIN_PLAYERS = 2;
 const MAGIC_6 = 6;
+const NB_CATEGORIES = 4;
 const CATEGORIES = {
   POP: 'Pop',
   SCIENCE: 'Science',
@@ -50,38 +52,24 @@ export class Game {
   }
 
   currentCategory() {
-    const modular = this.places[this.currentPlayer] % 4;
+    const modular = this.places[this.currentPlayer] % NB_CATEGORIES;
     const categories = [CATEGORIES.POP, CATEGORIES.SCIENCE, CATEGORIES.SPORT, CATEGORIES.ROCK];
     return categories[modular];
-    if (this.places[this.currentPlayer] == 0) return 'Pop';
-    if (this.places[this.currentPlayer] == 4) return 'Pop';
-    if (this.places[this.currentPlayer] == 8) return 'Pop';
-    if (this.places[this.currentPlayer] == 1) return 'Science';
-    if (this.places[this.currentPlayer] == 5) return 'Science';
-    if (this.places[this.currentPlayer] == 9) return 'Science';
-    if (this.places[this.currentPlayer] == 2) return 'Sports';
-    if (this.places[this.currentPlayer] == 6) return 'Sports';
-    if (this.places[this.currentPlayer] == 10) return 'Sports';
-    return 'Rock';
   }
 
   askQuestion() {
-    if (this.currentCategory() == 'Pop') {
-      console.log(this.popQuestions.shift());
-    }
-    if (this.currentCategory() == 'Science') {
-      console.log(this.scienceQuestions.shift());
-    }
-    if (this.currentCategory() == 'Sports') {
-      console.log(this.sportsQuestions.shift());
-    }
-    if (this.currentCategory() == 'Rock') {
-      console.log(this.rockQuestions.shift());
-    }
+    const categoryQuestionsMap = {
+      [CATEGORIES.POP]: this.popQuestions,
+      [CATEGORIES.SCIENCE]: this.scienceQuestions,
+      [CATEGORIES.SPORT]: this.sportsQuestions,
+      [CATEGORIES.ROCK]: this.rockQuestions,
+    };
+
+    console.log(categoryQuestionsMap[this.currentCategory()].shift());
   }
 
-  isPlayable(playerCount: number) {
-    return playerCount >= 2;
+  isPlayable(): boolean {
+    return this.players.length >= MIN_PLAYERS;
   }
 
   roll(diceRoll: number) {
