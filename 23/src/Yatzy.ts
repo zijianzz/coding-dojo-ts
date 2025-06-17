@@ -20,6 +20,12 @@ const xOfAKind = (dices: Dices, times: number): number => {
   return (diceIndex + 1) * times;
 };
 
+interface ScoreRules {
+  appliesTo(dices: Dices): boolean;
+  getScore(dices: Dices): number;
+}
+
+
 export default class Yatzy {
   private dices: Dices;
 
