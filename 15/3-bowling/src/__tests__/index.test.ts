@@ -1,9 +1,9 @@
 import { BowlingGame } from '..';
 
 describe('BowlingGame', () => {
-  let game: BowlingGame
+  let game: BowlingGame;
 
   beforeEach(() => {
-    game = new BowlingGame()
-  })
+    game = new BowlingGame();
+  });
 });
